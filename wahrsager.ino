@@ -39,7 +39,9 @@ void timestamp(){
 void stopwatering(){
 //switch off the relay
 //turn on red led, turn off green led}
-void startwatering(){//switch on the relay, turn off red led, turn on green led}
+void startwatering(){
+//switch on the relay, turn off red led, turn on green led
+}
 void grabjson(){
 }
 void {parsejson(){
