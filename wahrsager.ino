@@ -28,6 +28,7 @@ WiFi.begin(ssid, password);
 
 }
 void loop(){
+t=timestamp();
 // grab timestamp
 //check 
 if (t > 000 and t <006){ //five minutes after midnight it grabs owm info
@@ -47,11 +48,11 @@ ClockLed HIGH;
 
 }//loop end
 
-void timestamp(){
+int timestamp(){
    timeClient.update();
   tH=timeClient.getHours();
   tM=timeClient.getMinutes();
-  t = (tH* 100) + tM; 
+  return ((tH* 100) + tM); 
 }
 void stopwatering(){
 //switch off the relay
