@@ -17,7 +17,7 @@ void setup (){
 void loop(){
 // grab timestamp
 //check 
-if (timestamp = 005){
+if (timestamp = 002){ //two minutes after midnight it grabs owm info
 grabjson
 parsejson =>output rainfall
 if (rainfall >= 06) {
@@ -38,7 +38,8 @@ void timestamp(){
 }
 void stopwatering(){
 //switch off the relay
-//turn on red led, turn off green led}
+//turn on red led, turn off green led
+}
 void startwatering(){
 //switch on the relay, turn off red led, turn on green led
 }
