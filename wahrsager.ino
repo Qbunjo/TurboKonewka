@@ -17,7 +17,7 @@ void setup (){
 void loop(){
 // grab timestamp
 //check 
-if (timestamp = 002){ //two minutes after midnight it grabs owm info
+if (timestamp = 005){ //five minutes after midnight it grabs owm info
 grabjson
 parsejson =>output rainfall
 if (rainfall >= 06) {
