@@ -10,6 +10,7 @@
 //define variables
 
 int t=0,tH=0 tM=0; //time variables
+double rainfall;
 
 const char *ssid     = "SSID";
 const char *password = "PASS";
@@ -55,11 +56,16 @@ int timestamp(){
   return ((tH* 100) + tM); 
 }
 void stopwatering(){
-//switch off the relay
+digitalWrite(RelayPin,HIGH);
+digitalWrite(redLedPin,HIGH);
+digitalWrite(greenLedPin,LOW);
+  //switch off the relay
 //turn on red led, turn off green led
 }
 void startwatering(){
-//switch on the relay, turn off red led, turn on green led
+digitalWrite(RelayPin,LOw);
+digitalWrite(redLedPin,LOW);
+digitalWrite(greenLedPin,HIGH);
 }
 void grabjson(){
 }
