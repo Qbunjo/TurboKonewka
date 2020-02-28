@@ -25,7 +25,7 @@ stopwatering}
 else {startwatering}
 
 }
-for (TimeWait=0, TimeWait==3000, TimeWait+2){
+for (TimeWait=0, TimeWait==3000, TimeWait+2){ //five minutes of wait
 delay(1000);//wait for 1 second
 ClockLed LOW;
 delay(1000);//wait for 1 second
