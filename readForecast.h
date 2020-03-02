@@ -51,7 +51,7 @@ void loop() { // this will never run!
 
 
 //#########################################################################################
-void DisplayForecastSection(int x, int y) {
+float Count24hRainfall() {
   
   int r = 1;
   do {   
@@ -59,7 +59,7 @@ void DisplayForecastSection(int x, int y) {
      rainFall=rainFall+rain_readings[r];
     r++;
   } while (r <= max_readings);
-}
+return rainFall;}
 
 //#########################################################################################
 uint8_t StartWiFi() {
