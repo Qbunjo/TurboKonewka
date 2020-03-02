@@ -65,7 +65,7 @@ digitalWrite(RedLedPin,LOW);
 digitalWrite(GreenLedPin,HIGH);
 }
 void grabjson(){
-  curl "http://api.openweathermap.org/data/2.5/forecast?q=Stare Babice,PL&mode=json&APPID=5b2c2ccce162451f435efd1a2ba7ed1f&units=metric" ;
+  curl "http://api.openweathermap.org/data/2.5/forecast?q=CITY,CT&mode=json&APPID=APIAPI&units=metric" ;
 }
 void parsejson(){
   //forecast is for 3 hours, so we have to check 3x8=24h
