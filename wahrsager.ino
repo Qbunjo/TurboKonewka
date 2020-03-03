@@ -4,6 +4,7 @@
 #include <ESP8266WiFi.h>
 #include "owm_credentials.h"
 #include "forecast_record.h"
+#include "common.h"
 
 
 //define pins
@@ -19,8 +20,6 @@ double rainFall;
 
 Forecast_record_type  WxConditions[1];
 Forecast_record_type  WxForecast[max_readings];
-
-#include "common.h"
 
 float rain_readings[max_readings]        = {0};
 
@@ -92,5 +91,5 @@ double parseJson(){
     r++;
   } while (r <= max_readings);
 return rainf;};
-  }
+  };
 }
