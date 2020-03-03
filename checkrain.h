@@ -4,7 +4,9 @@
 #include <JsonListener.h>
 #include <time.h>
 #include "OpenWeatherMapForecast.h"
-
+double rain=0;
+double raintreshold=0.4;
+boolean isitgonnarain=false;
 
 // initiate the client
 OpenWeatherMapForecast client;
@@ -18,16 +20,8 @@ data for. It'll be a URL like https://openweathermap.org/city/2657896. The numbe
 at the end is what you assign to the constant below.
  */
 String OPEN_WEATHER_MAP_LOCATION_ID = "758343";
-/*
-Arabic - ar, Bulgarian - bg, Catalan - ca, Czech - cz, German - de, Greek - el,
-English - en, Persian (Farsi) - fa, Finnish - fi, French - fr, Galician - gl,
-Croatian - hr, Hungarian - hu, Italian - it, Japanese - ja, Korean - kr,
-Latvian - la, Lithuanian - lt, Macedonian - mk, Dutch - nl, Polish - pl,
-Portuguese - pt, Romanian - ro, Russian - ru, Swedish - se, Slovak - sk,
-Slovenian - sl, Spanish - es, Turkish - tr, Ukrainian - ua, Vietnamese - vi,
-Chinese Simplified - zh_cn, Chinese Traditional - zh_tw.
-*/
-String OPEN_WEATHER_MAP_LANGUAGE = "en";
+
+String OPEN_WEATHER_MAP_LANGUAGE = "pl";
 boolean IS_METRIC = true;
 uint8_t MAX_FORECASTS = 8;
 
@@ -87,15 +81,16 @@ void setup() {
     Serial.printf("windDeg: %f\n", data[i].windDeg);
     // rain: {3h: 0.055}, float rain;
     Serial.printf("rain: %f\n", data[i].rain); //HEREHEREHERE!!!
+   rain=rain+data[i].rain;
     // },"sys":{"pod":"d"}
     // dt_txt: "2018-05-23 09:00:00"   String observationTimeText;
     Serial.printf("observationTimeText: %s\n", data[i].observationTimeText.c_str());
   }
-
+ if(rain>=rainTreshold){isitgonnarain=true;} else {isitgonnarain=false};
+ 
+ }
   Serial.println();
   Serial.println("---------------------------------------------------/\n");
 
 }
 
-void loop() {
-}
