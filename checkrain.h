@@ -31,7 +31,7 @@ String OPEN_WEATHER_MAP_LANGUAGE = "en";
 boolean IS_METRIC = true;
 uint8_t MAX_FORECASTS = 8;
 
- */
+ 
 void setup() {
   Serial.begin(115200);
  
@@ -97,9 +97,5 @@ void setup() {
 
 }
 
-
-/**
- * LOOP
- */
 void loop() {
-
+}
