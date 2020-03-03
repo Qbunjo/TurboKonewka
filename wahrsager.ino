@@ -10,6 +10,7 @@
 int RedLedPin=4,GreenLedPin=5,RelayPin=6;
 
 int t=0,tH=0,tM=0; //time variables
+boolean rainF=false;
 
 
 
@@ -33,8 +34,8 @@ t=timestamp();
 //check 
 if (t > 000 and t <006){ //five minutes after midnight it grabs owm info
 
-  
-if (IsItRain ==true) {
+rainF=IsItRain();  
+if (rainF ==true) {
 stopwatering;}
 else {startwatering;}
 
