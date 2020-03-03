@@ -18,7 +18,6 @@ WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "europe.pool.ntp.org", 3600, 60000);
 
 void setup (){
-Serial.begin(115200);
 WiFi.begin(ssid, password); 
 
   while ( WiFi.status() != WL_CONNECTED ) {
