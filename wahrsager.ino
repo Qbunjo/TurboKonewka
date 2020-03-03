@@ -83,14 +83,14 @@ void grabjson(){
         Attempts++;
       }
 }
-float parseJson(){
+double parseJson(){
   int r=0;
-  float rainf=0;
+  double rainf=0;
   do {   
      rain_readings[r] = WxForecast[r].Rainfall;
      rainf=rainf+rain_readings[r];
     r++;
   } while (r <= max_readings);
-return rainf;}
+return rainf;};
   }
 }
