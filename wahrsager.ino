@@ -1,7 +1,10 @@
-#include <NTPClient.h>;
-#include <Wifiudp.h>;
-#include <ArduinoJson.h>;
-#include <ESP8266WiFi.h>;
+#include <WiFiUdp.h>
+#include <NTPClient.h>
+#include <ArduinoJson.h>
+#include <ESP8266WiFi.h>
+#include "owm_credentials.h"
+#include "forecast_record.h"
+
 
 //define pins
 // for led 
@@ -10,7 +13,7 @@
 int RedLedPin=4,GreenLedPin=5,RelayPin=6;
 
 int t=0,tH=0,tM=0; //time variables
-double rainfall;
+double rainFall;
 
 #define max_readings 8
 
@@ -22,8 +25,7 @@ Forecast_record_type  WxForecast[max_readings];
 float rain_readings[max_readings]        = {0};
 
 
-const char *ssid     = "SSID";
-const char *password = "PASS";
+
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "europe.pool.ntp.org", 3600, 60000);
 
@@ -44,10 +46,10 @@ t=timestamp();
 //check 
 if (t > 000 and t <006){ //five minutes after midnight it grabs owm info
 grabjson();
-rainfall=parsejson();
-if (rainfall >= 06) {
-stopwatering}
-else {startwatering}
+rainFall=parseJson();
+if (rainFall >= 06) {
+stopwatering;}
+else {startwatering;}
 
 }
 for (int TimeWait=0; TimeWait==2999; TimeWait++){ //five minutes of wait
@@ -82,11 +84,13 @@ void grabjson(){
       }
 }
 float parseJson(){
+  int r=0;
+  float rainf=0;
   do {   
-     rain_readings[r]     = WxForecast[r].Rainfall;
-     float rainFall=rainFall+rain_readings[r];
+     rain_readings[r] = WxForecast[r].Rainfall;
+     rainf=rainf+rain_readings[r];
     r++;
   } while (r <= max_readings);
-return rainFall;}
+return rainf;}
   }
 }
