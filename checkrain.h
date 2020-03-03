@@ -3,7 +3,7 @@
 #include <time.h>
 #include "OpenWeatherMapForecast.h"
 double rain=0;
-double raintreshold=0.4;
+double rainTreshold=0.4;
 boolean isitgonnarain=false;
 
 // initiate the client
