@@ -91,5 +91,5 @@ boolean IsItRain() {
   Serial.println("---------------------------------------------------/\n");
 
 }
-return IsItRain();
+return isitgonnarain();
 
