@@ -2,8 +2,8 @@
 #include <JsonListener.h>
 #include <time.h>
 #include "OpenWeatherMapForecast.h"
-double rain=0;
-double rainTreshold=0.4;
+float rain=0;
+float rainTreshold=0.4;
 boolean isitgonnarain=false;
 
 // initiate the client
