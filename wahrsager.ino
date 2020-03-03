@@ -34,7 +34,7 @@ t=timestamp();
 if (t > 000 and t <006){ //five minutes after midnight it grabs owm info
 
   
-if (isitrain ==true) {
+if (IsItRain ==true) {
 stopwatering;}
 else {startwatering;}
 
