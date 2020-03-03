@@ -1,6 +1,4 @@
-
 #include <Arduino.h>
-
 #include <JsonListener.h>
 #include <time.h>
 #include "OpenWeatherMapForecast.h"
@@ -26,7 +24,7 @@ boolean IS_METRIC = true;
 uint8_t MAX_FORECASTS = 8;
 
  
-void setup() {
+boolean IsItRain() {
   Serial.begin(115200);
  
   Serial.println();
@@ -93,4 +91,5 @@ void setup() {
   Serial.println("---------------------------------------------------/\n");
 
 }
+return IsItRain();
 
