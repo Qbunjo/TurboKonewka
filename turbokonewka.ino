@@ -4,21 +4,23 @@
 #include "checkrain.h"
 
 //define pins
-// for led 
+// for led
 // for relay
 //define variables
-int RedLedPin=4,GreenLedPin=5,RelayPin=6;
+int RedLedPin = 4, GreenLedPin = 5, RelayPin = 6;
 
-int t=0,tH=0,tM=0; //time variables
-boolean rainF=false;
+int t = 0, tH = 0, tM = 0; //time variables
+boolean rainF = false;
+String ssid="blah";
+String password="blah";
 
 
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "europe.pool.ntp.org", 3600, 60000);
 
-void setup (){
-WiFi.begin(ssid, password); 
+void setup () {
+  WiFi.begin(ssid, password);
 
   while ( WiFi.status() != WL_CONNECTED ) {
     delay ( 500 );
@@ -27,40 +29,42 @@ WiFi.begin(ssid, password);
   timeClient.begin();
 
 }
-void loop(){
-t=timestamp();
-// grab timestamp
-//check 
-if (t > 000 and t <006){ //five minutes after midnight it grabs owm info
+void loop() {
+  t = timestamp();
+  // grab timestamp
+  //check
+  if (t > 000 and t < 006) { //five minutes after midnight it grabs owm info
 
-rainF=IsItRain();  
-if (rainF ==true) {
-stopwatering;}
-else {startwatering;}
+    rainF = IsItRain();
+    if (rainF == true) {
+      stopwatering;
+    }
+    else {
+      startwatering;
+    }
 
-}
-for (int TimeWait=0; TimeWait==2999; TimeWait++){ //five minutes of wait
-delay(1000);//wait for 1 second
-}
+  }
+  for (int TimeWait = 0; TimeWait == 2999; TimeWait++) { //five minutes of wait
+    delay(1000);//wait for 1 second
+  }
 
 }//loop end
 
-int timestamp(){
-   timeClient.update();
-  tH=timeClient.getHours();
-  tM=timeClient.getMinutes();
-  return ((tH* 100) + tM); 
+int timestamp() {
+  timeClient.update();
+  tH = timeClient.getHours();
+  tM = timeClient.getMinutes();
+  return ((tH * 100) + tM);
 }
-void stopwatering(){
-digitalWrite(RelayPin,HIGH);
-digitalWrite(RedLedPin,HIGH);
-digitalWrite(GreenLedPin,LOW);
+void stopwatering() {
+  digitalWrite(RelayPin, HIGH);
+  digitalWrite(RedLedPin, HIGH);
+  digitalWrite(GreenLedPin, LOW);
   //switch off the relay
-//turn on red led, turn off green led
+  //turn on red led, turn off green led
 }
-void startwatering(){
-digitalWrite(RelayPin,LOW);
-digitalWrite(RedLedPin,LOW);
-digitalWrite(GreenLedPin,HIGH);
+void startwatering() {
+  digitalWrite(RelayPin, LOW);
+  digitalWrite(RedLedPin, LOW);
+  digitalWrite(GreenLedPin, HIGH);
 }
-

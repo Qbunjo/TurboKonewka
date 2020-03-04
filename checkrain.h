@@ -84,12 +84,10 @@ boolean IsItRain() {
     // dt_txt: "2018-05-23 09:00:00"   String observationTimeText;
     Serial.printf("observationTimeText: %s\n", data[i].observationTimeText.c_str());
   }
- if(rain>=rainTreshold){isitgonnarain=true;} else {isitgonnarain=false};
+ if(rain>=rainTreshold){isitgonnarain=true;} else {isitgonnarain=false;};
  
- }
+ 
   Serial.println();
   Serial.println("---------------------------------------------------/\n");
-
-}
-return isitgonnarain();
+return isitgonnarain;
 }
