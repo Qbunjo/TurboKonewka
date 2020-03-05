@@ -64,8 +64,8 @@ int tHi,tMi;//int hour
  * WiFi Settings
  */
 const char* ESP_HOST_NAME = "TurboKonewka";
-const char* WIFI_SSID     = "SpanishInquisition";
-const char* WIFI_PASSWORD = "Jakuboslaw";
+const char* WIFI_SSID     = "SSID";
+const char* WIFI_PASSWORD = "PASS";
 
 // initiate the WifiClient
 WiFiClient wifiClient;
