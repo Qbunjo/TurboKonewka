@@ -64,8 +64,8 @@ int tHi,tMi;//int hour
  * WiFi Settings
  */
 const char* ESP_HOST_NAME = "TurboKonewka";
-const char* WIFI_SSID     = "yourssid";
-const char* WIFI_PASSWORD = "yourpassw0rd";
+const char* WIFI_SSID     = "SpanishInquisition";
+const char* WIFI_PASSWORD = "Jakuboslaw";
 
 // initiate the WifiClient
 WiFiClient wifiClient;
@@ -75,6 +75,7 @@ WiFiClient wifiClient;
  */
 void connectWiFi() {
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.println();
   Serial.print("Connecting to ");
   Serial.println(WIFI_SSID);
   while (WiFi.status() != WL_CONNECTED) {
@@ -92,6 +93,7 @@ void stopwatering() {
   digitalWrite(RelayPin, HIGH);
   digitalWrite(RedLedPin, HIGH);
   digitalWrite(GreenLedPin, LOW);
+  Serial.println("Watering OFF");
   //switch off the relay
   //turn on red led, turn off green led
 }
@@ -99,6 +101,7 @@ void startwatering() {
   digitalWrite(RelayPin, LOW);
   digitalWrite(RedLedPin, LOW);
   digitalWrite(GreenLedPin, HIGH);
+  Serial.println("Watering ON");
 }
 
 int timestamp() {
@@ -109,8 +112,7 @@ int timestamp() {
   tHi=tH.toInt();
   tM = timeClient.getMinutes();
   tMi=tM.toInt();
-  
-  return ((tHi*100) + tMi);
+    return ((tHi*100) + tMi);
 }
 
 boolean grabWeather() {
@@ -176,6 +178,8 @@ boolean grabWeather() {
 
   Serial.println();
   Serial.println("---------------------------------------------------/\n");
+  Serial.print("rainfall info:");
+  Serial.println(rainFall);
   if (rainFall>rainThreshold)  return true;
   else return false;
 }
@@ -198,20 +202,23 @@ void setup() {
  */
 void loop() {
  int t = timestamp();
+ Serial.print("Current time:");
+ Serial.println(t);
   // grab timestamp
   //check
-  if (t < 000 and t > 006) { //five minutes after midnight it grabs owm info
+  if (t > 000 and t < 007) { //five minutes after midnight it grabs owm info
 
     rainFall = grabWeather();
     if (rainFall == true) {
-      stopwatering;
+      stopwatering();
     }
     else {
-      startwatering;
+      startwatering();
     }
-
+Serial.println("Counting to 5 minutes (3000 seconds):");
   }
-  for (int TimeWait = 0; TimeWait == 2999; TimeWait++) { //five minutes of wait
+  for (int TimeWait = 0; TimeWait < 3000; TimeWait++) {
+    Serial.println(TimeWait);//five minutes of wait
     delay(1000);//wait for 1 second
   }
 
