@@ -1,24 +1,24 @@
 /**The MIT License (MIT)
 
-Copyright (c) 2018 by ThingPulse Ltd., https://thingpulse.com
+  Copyright (c) 2018 by ThingPulse Ltd., https://thingpulse.com
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 */
 
 #include <Arduino.h>
@@ -36,43 +36,43 @@ OpenWeatherMapForecast client;
 // See https://docs.thingpulse.com/how-tos/openweathermap-key/
 String OPEN_WEATHER_MAP_APP_ID = "5b2c2ccce162451f435efd1a2ba7ed1f";
 /*
-Go to https://openweathermap.org/find?q= and search for a location. Go through the
-result set and select the entry closest to the actual location you want to display 
-data for. It'll be a URL like https://openweathermap.org/city/2657896. The number
-at the end is what you assign to the constant below.
- */
+  Go to https://openweathermap.org/find?q= and search for a location. Go through the
+  result set and select the entry closest to the actual location you want to display
+  data for. It'll be a URL like https://openweathermap.org/city/2657896. The number
+  at the end is what you assign to the constant below.
+*/
 String OPEN_WEATHER_MAP_LOCATION_ID = "758343";
 /*
-Arabic - ar, Bulgarian - bg, Catalan - ca, Czech - cz, German - de, Greek - el,
-English - en, Persian (Farsi) - fa, Finnish - fi, French - fr, Galician - gl,
-Croatian - hr, Hungarian - hu, Italian - it, Japanese - ja, Korean - kr,
-Latvian - la, Lithuanian - lt, Macedonian - mk, Dutch - nl, Polish - pl,
-Portuguese - pt, Romanian - ro, Russian - ru, Swedish - se, Slovak - sk,
-Slovenian - sl, Spanish - es, Turkish - tr, Ukrainian - ua, Vietnamese - vi,
-Chinese Simplified - zh_cn, Chinese Traditional - zh_tw.
+  Arabic - ar, Bulgarian - bg, Catalan - ca, Czech - cz, German - de, Greek - el,
+  English - en, Persian (Farsi) - fa, Finnish - fi, French - fr, Galician - gl,
+  Croatian - hr, Hungarian - hu, Italian - it, Japanese - ja, Korean - kr,
+  Latvian - la, Lithuanian - lt, Macedonian - mk, Dutch - nl, Polish - pl,
+  Portuguese - pt, Romanian - ro, Russian - ru, Swedish - se, Slovak - sk,
+  Slovenian - sl, Spanish - es, Turkish - tr, Ukrainian - ua, Vietnamese - vi,
+  Chinese Simplified - zh_cn, Chinese Traditional - zh_tw.
 */
 String OPEN_WEATHER_MAP_LANGUAGE = "en";
 boolean IS_METRIC = true;
 uint8_t MAX_FORECASTS = 8;
-float rainFall=0;
-float rainThreshold=0.5;
-int RedLedPin = 4, GreenLedPin = 5, RelayPin = 6;
-String tH,tM;//string hour
-int tHi,tMi;//int hour
+float rainFall = 0;
+float rainThreshold = 0.5;
+int RedLedPin = 15, GreenLedPin = 13, RelayPin = 12;
+String tH, tM; //string hour
+int tHi, tMi; //int hour
 
 /**
- * WiFi Settings
- */
+   WiFi Settings
+*/
 const char* ESP_HOST_NAME = "TurboKonewka";
-const char* WIFI_SSID     = "SSID";
-const char* WIFI_PASSWORD = "PASS";
+const char* WIFI_SSID     = "TurboKombi";
+const char* WIFI_PASSWORD = "Jakuboslaw";
 
 // initiate the WifiClient
 WiFiClient wifiClient;
 
 /**
- * Helping functions
- */
+   Helping functions
+*/
 void connectWiFi() {
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.println();
@@ -86,7 +86,7 @@ void connectWiFi() {
   Serial.println("WiFi connected!");
   Serial.println(WiFi.localIP());
   Serial.println();
-  
+
 }
 
 void stopwatering() {
@@ -109,22 +109,22 @@ int timestamp() {
   timeClient.begin();
   timeClient.update();
   tH = timeClient.getHours();
-  tHi=tH.toInt();
+  tHi = tH.toInt();
   tM = timeClient.getMinutes();
-  tMi=tM.toInt();
-    return ((tHi*100) + tMi);
+  tMi = tM.toInt();
+  return ((tHi * 100) + tMi);
 }
 
 boolean grabWeather() {
-  
-  rainFall=0;
+
+  rainFall = 0;
   Serial.println();
   Serial.println("\n\nNext Loop-Step: " + String(millis()) + ":");
 
   OpenWeatherMapForecastData data[MAX_FORECASTS];
   client.setMetric(IS_METRIC);
   client.setLanguage(OPEN_WEATHER_MAP_LANGUAGE);
-  uint8_t allowedHours[] = {0,12};
+  uint8_t allowedHours[] = {0, 12};
   client.setAllowedHours(allowedHours, 2);
   uint8_t foundForecasts = client.updateForecastsById(data, OPEN_WEATHER_MAP_APP_ID, OPEN_WEATHER_MAP_LOCATION_ID, MAX_FORECASTS);
   Serial.printf("Found %d forecasts in this call\n", foundForecasts);
@@ -170,7 +170,7 @@ boolean grabWeather() {
     Serial.printf("windDeg: %f\n", data[i].windDeg);
     // rain: {3h: 0.055}, float rain;
     Serial.printf("rain: %f\n", data[i].rain); //HEREHEREHERE!!!
-    rainFall=rainFall+data[i].rain;
+    rainFall = rainFall + data[i].rain;
     // },"sys":{"pod":"d"}
     // dt_txt: "2018-05-23 09:00:00"   String observationTimeText;
     Serial.printf("observationTimeText: %s\n", data[i].observationTimeText.c_str());
@@ -180,30 +180,36 @@ boolean grabWeather() {
   Serial.println("---------------------------------------------------/\n");
   Serial.print("rainfall info:");
   Serial.println(rainFall);
-  if (rainFall>rainThreshold)  return true;
+  if (rainFall > rainThreshold)  return true;
   else return false;
 }
 
 /**
- * SETUP
- */
+   SETUP
+*/
 void setup() {
   Serial.begin(115200);
   delay(500);
+  pinMode(RelayPin, OUTPUT);
+  pinMode(RedLedPin, OUTPUT);
+  pinMode(GreenLedPin, OUTPUT);
   connectWiFi();
- //grabWeather();
- 
+  //grabWeather();
+  digitalWrite(RelayPin, LOW);
+  digitalWrite(RedLedPin, LOW);
+  digitalWrite(GreenLedPin, HIGH);
+
 
 }
 
 
 /**
- * LOOP
- */
+   LOOP
+*/
 void loop() {
- int t = timestamp();
- Serial.print("Current time:");
- Serial.println(t);
+  int t = timestamp();
+  Serial.print("Current time:");
+  Serial.println(t);
   // grab timestamp
   //check
   if (t > 000 and t < 007) { //five minutes after midnight it grabs owm info
@@ -215,7 +221,7 @@ void loop() {
     else {
       startwatering();
     }
-Serial.println("Counting to 5 minutes (3000 seconds):");
+    Serial.println("Counting to 5 minutes (3000 seconds):");
   }
   for (int TimeWait = 0; TimeWait < 3000; TimeWait++) {
     Serial.println(TimeWait);//five minutes of wait
