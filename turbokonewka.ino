@@ -53,7 +53,7 @@ String OPEN_WEATHER_MAP_LOCATION_ID = "758343";
 */
 String OPEN_WEATHER_MAP_LANGUAGE = "en";
 boolean IS_METRIC = true;
-uint8_t MAX_FORECASTS = 8;
+uint8_t MAX_FORECASTS = 3;
 float rainFall = 0;
 float rainThreshold = 0.5;
 int RedLedPin = 15, GreenLedPin = 13, RelayPin = 12;
@@ -194,10 +194,14 @@ void setup() {
   pinMode(RedLedPin, OUTPUT);
   pinMode(GreenLedPin, OUTPUT);
   connectWiFi();
-  //grabWeather();
-  digitalWrite(RelayPin, LOW);
-  digitalWrite(RedLedPin, LOW);
-  digitalWrite(GreenLedPin, HIGH);
+  //initial check for weather
+  rainFall = grabWeather();
+  if (rainFall == true) {
+    stopwatering();
+  }
+  else {
+    startwatering();
+  }
 
 
 }
