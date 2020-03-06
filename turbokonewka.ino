@@ -34,14 +34,14 @@
 OpenWeatherMapForecast client;
 
 // See https://docs.thingpulse.com/how-tos/openweathermap-key/
-String OPEN_WEATHER_MAP_APP_ID = "5b2c2ccce162451f435efd1a2ba7ed1f";
+String OPEN_WEATHER_MAP_APP_ID = "YOURAPI";
 /*
   Go to https://openweathermap.org/find?q= and search for a location. Go through the
   result set and select the entry closest to the actual location you want to display
   data for. It'll be a URL like https://openweathermap.org/city/2657896. The number
   at the end is what you assign to the constant below.
 */
-String OPEN_WEATHER_MAP_LOCATION_ID = "758343";
+String OPEN_WEATHER_MAP_LOCATION_ID = "YOURLOCATION";
 /*
   Arabic - ar, Bulgarian - bg, Catalan - ca, Czech - cz, German - de, Greek - el,
   English - en, Persian (Farsi) - fa, Finnish - fi, French - fr, Galician - gl,
@@ -51,11 +51,11 @@ String OPEN_WEATHER_MAP_LOCATION_ID = "758343";
   Slovenian - sl, Spanish - es, Turkish - tr, Ukrainian - ua, Vietnamese - vi,
   Chinese Simplified - zh_cn, Chinese Traditional - zh_tw.
 */
-String OPEN_WEATHER_MAP_LANGUAGE = "en";
+String OPEN_WEATHER_MAP_LANGUAGE = "pl";
 boolean IS_METRIC = true;
-uint8_t MAX_FORECASTS = 3;
+uint8_t MAX_FORECASTS = 8;
 float rainFall = 0;
-float rainThreshold = 0.5;
+float rainThreshold = 1.2;
 int RedLedPin = 15, GreenLedPin = 13, RelayPin = 12;
 String tH, tM; //string hour
 int tHi, tMi; //int hour
@@ -124,8 +124,8 @@ boolean grabWeather() {
   OpenWeatherMapForecastData data[MAX_FORECASTS];
   client.setMetric(IS_METRIC);
   client.setLanguage(OPEN_WEATHER_MAP_LANGUAGE);
-  uint8_t allowedHours[] = {0, 12};
-  client.setAllowedHours(allowedHours, 2);
+  uint8_t allowedHours[] = {0,3,6,9, 12,15,18,21};
+  client.setAllowedHours(allowedHours, 8);
   uint8_t foundForecasts = client.updateForecastsById(data, OPEN_WEATHER_MAP_APP_ID, OPEN_WEATHER_MAP_LOCATION_ID, MAX_FORECASTS);
   Serial.printf("Found %d forecasts in this call\n", foundForecasts);
   Serial.println("------------------------------------");
